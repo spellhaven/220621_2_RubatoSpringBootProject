@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace = "com.spellhaven.rubatoHome.dao.IDao">
+
+	<!-- freeBoard용 SQL들. IDao 인터페이스랑 함수 이름, param 순서, param 개수 잘 맞춰 쓰셈 ㅋ -->
+	<insert id="fbwriteDao">
+		INSERT INTO freeboard(fbnum, fbname, fbtitle, fbcontent, fbid, fbhit) VALUES (fb_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, 0)
+	</insert>
+
+	<select id="fblistDao" resultType = "com.spellhaven.rubatoHome.dto.FreeBoardDto">
+		SELECT * FROM freeboard ORDER BY fbnum DESC
+	</select> <!-- fbnum DESC 순으로 불러와야 최근 글부터 불러오게 된디. -->
+
+	<select id = "fblistCountDao" resultType = "int"> <!-- 혼자만 담백한 resultType. -->
+		SELECT count(*) FROM freeboard
+	</select>
+
+	<update id = "fbBigHitDao">
+		UPDATE freeboard SET fbhit = fbhit + 1 WHERE fbnum = #{param1}
+	</update>
+
+
+
+	<!-- member용 SQL -->
+
+
+</mapper>

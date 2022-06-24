@@ -150,6 +150,12 @@ public class HomeController {
 			destinationFile.getParentFile().mkdir();
 			files.transferTo(destinationFile);
 			
+			// 이 코드 3줄 중요하다. " '작성' 버튼을 누르면서 현재 글에 해당하는 파일을 첨부하려면 현재 글 일련번호를 가져와야 하는데 그건 당장 '작성' 버튼을 눌렀을 때 생성된 거니까...
+			ArrayList<FreeBoardDto> fbDtos = dao.fblistDao(); // 131줄에서 글을 썼지, 그걸 가져와.
+			int fbnum = fbDtos.get(0).getFbnum(); // 글목록에서 최상단에 있는 글이 당장 쓴 글일 테니까.
+		
+			dao.fbfileInsertDao(fbnum, destinationFileName, oriFileName, fileUrl);
+			
 		}
 		return "redirect:board_list";
 	}

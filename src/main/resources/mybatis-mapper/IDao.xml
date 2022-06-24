@@ -42,6 +42,10 @@
 	<delete id = "fbdeleteDao">
 		DELETE FROM freeboard WHERE fbnum = #{param1}
 	</delete>
+	
+	<insert id = "fbfileInsertDao">
+		INSERT INTO fbfiles(fno, bno, filename, fileoriname, fileurl) VALUES (fno_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}) 
+	</insert>
 
 
 	<!-- member용 SQL -->

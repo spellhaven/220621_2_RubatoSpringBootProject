@@ -17,7 +17,8 @@ public interface IDao {
 	public ArrayList<FreeBoardDto> fbContentSearchListDao(String keyword); // 자유게시판 - 글내용으로 검색한 글 리스트
 	public ArrayList<FreeBoardDto> fbWriterSearchListDao(String keyword); // 자유게시판 - 글쓴이로 검색한 글 리스트
 	
-	public void fbdeleteDao(String fbnum);
+	public void fbdeleteDao(String fbnum); // 글삭튀
+	public void fbfileInsertDao(int bno, String fileName, String fileOriName, String fileUrl); // 파일 원래이름, 변경된이름,  파일이 첨부된 게시글 번호, 파일경로를 DB에 저장해 주는 놈
 	
 	
 	

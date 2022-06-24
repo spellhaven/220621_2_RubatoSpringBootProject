@@ -2,6 +2,7 @@ package com.spellhaven.rubatoHome.dao;
 
 import java.util.ArrayList;
 
+import com.spellhaven.rubatoHome.dto.FileDto;
 import com.spellhaven.rubatoHome.dto.FreeBoardDto;
 
 public interface IDao {
@@ -18,7 +19,8 @@ public interface IDao {
 	public ArrayList<FreeBoardDto> fbWriterSearchListDao(String keyword); // 자유게시판 - 글쓴이로 검색한 글 리스트
 	
 	public void fbdeleteDao(String fbnum); // 글삭튀
-	public void fbfileInsertDao(int bno, String fileName, String fileOriName, String fileUrl); // 파일 원래이름, 변경된이름,  파일이 첨부된 게시글 번호, 파일경로를 DB에 저장해 주는 놈
+	public void fbfileInsertDao(int bno, String fileName, String fileOriName, String fileUrl, String oriFileNameExtension); // 파일 원래이름, 변경된이름,  파일이 첨부된 게시글 번호, 파일경로를 DB에 저장해 주는 놈
+	public FileDto fbfileInfoDao(String fbnum); // 게시글 번호로 검색하여 해당 게시글의 첨부파일에 대한 모든 정보 불러오기 (ㅋ)
 	
 	
 	

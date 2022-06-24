@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head> 
@@ -126,6 +127,20 @@
   <p id="view_content">
     ${yourface.fbcontent }
   </p>	
+  <hr>
+  	<br>
+  
+  		<!-- TODO ${fileInfo}에 대해 HomeController랑 IDao에도 써야 하고, JSTL도 taglib 않했다.-->
+	  	<p id = "file_info">
+	  		※첨부파일:
+	  		<a href = "${pageContext.request.contextPath}/resources/uploads/${fileInfo.fileName}">${fileInfo.fileOriName}</a>
+	  	</p>
+	  	<c:if test="${fileInfo.fileExtension == 'jpg' or fileInfo.fileExtension == 'png' or fileInfo.fileExtension == 'gif' or fileInfo.fileExtension == 'bmp'}">
+		  	<p id = "image_view">
+		  		<img width = "200" src = "${pageContext.request.contextPath}/resources/uploads/${fileInfo.fileName}">
+		  	</p>
+	  	</c:if>
+  	<br>
   <hr>
   <!-- 댓글창아, 그렇게 됐다. (넌 극혐이야. 너 만들기 싫어.)
   <div id="comment_box">

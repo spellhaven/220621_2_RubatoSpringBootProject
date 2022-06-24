@@ -75,7 +75,8 @@ public class HomeController {
 		
 		dao.fbBigHitDao(fbnum); // 어. 모델에 싣기 전에 먼저 죠훼수 증가시켜. 어.
 		
-		model.addAttribute("yourface", dao.fbviewDao(fbnum));  // 진짜로 글 내용 보여 주는 함수. "인자 이름 아무렇게나 짓기 운동 명예 참가자"
+		model.addAttribute("yourface", dao.fbviewDao(fbnum));  // 진짜로 글 내용 보여 주는 함수. 인자 이름을 이상하게 지으니까 훨씬 신경써야 했고 힘들었다. 다음부턴 이러지 말자.
+		model.addAttribute("fileInfo", dao.fbfileInfoDao(fbnum));
 		
 		return "board_view";
 	}
@@ -151,10 +152,14 @@ public class HomeController {
 			files.transferTo(destinationFile);
 			
 			// 이 코드 3줄 중요하다. " '작성' 버튼을 누르면서 현재 글에 해당하는 파일을 첨부하려면 현재 글 일련번호를 가져와야 하는데 그건 당장 '작성' 버튼을 눌렀을 때 생성된 거니까...
-			ArrayList<FreeBoardDto> fbDtos = dao.fblistDao(); // 131줄에서 글을 썼지, 그걸 가져와.
+			ArrayList<FreeBoardDto> fbDtos = dao.fblistDao(); // Line 131에서 글을 썼는데 그걸 가져와.
 			int fbnum = fbDtos.get(0).getFbnum(); // 글목록에서 최상단에 있는 글이 당장 쓴 글일 테니까.
 		
-			dao.fbfileInsertDao(fbnum, destinationFileName, oriFileName, fileUrl);
+			dao.fbfileInsertDao(fbnum, destinationFileName, oriFileName, fileUrl, oriFileNameExtension);
+			
+			// 어. 내가 이 코드 맞게썻니? (코드 자체는 맞다 제법인데? 그치만 여기 말고 board_view에 있어야 한다. "남이 써 놓은 글을 볼 때" fileInfo가 와야지.
+			// 깜찍아! 너 Model 개념 사실 헷갈리지!! Model이랑 Request 차이점도 사실 헷갈리지!! (네.)
+			// model.addAttribute("fileInfo", dao.fbfileInfoDao(fbnum));
 			
 		}
 		return "redirect:board_list";

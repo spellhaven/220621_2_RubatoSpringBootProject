@@ -44,8 +44,12 @@
 	</delete>
 	
 	<insert id = "fbfileInsertDao">
-		INSERT INTO fbfiles(fno, bno, filename, fileoriname, fileurl) VALUES (fno_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}) 
+		INSERT INTO fbfiles(fno, bno, filename, fileoriname, fileurl, fileextension) VALUES (fno_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}) 
 	</insert>
+	
+	<select id = "fbfileInfoDao" resultType="com.spellhaven.rubatoHome.dto.FileDto">
+		SELECT * FROM fbfiles WHERE bno = #{param1}
+	</select>
 
 
 	<!-- member용 SQL -->

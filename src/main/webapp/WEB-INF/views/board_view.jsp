@@ -120,15 +120,11 @@
   <img src="${pageContext.request.contextPath}/resources/img/comm.gif">
   <h2 id="board_title">자유 게시판 </h2>
   <div id="view_title_box"> 
-    <span>까스통님의 선물인 보드카가 정말 독하네요!!!</span>
-    <span id="info">루바토 | 조회 : 208 | 2016-04-28 (09:20)</span>
+    <span>${yourface.fbtitle }</span>
+    <span id="info">글쓴쉑: ${yourface.fbname } | 조회수 : ${yourface.fbhit } | ${yourface.fbdate }</span>
   </div>	
   <p id="view_content">
-    까스통님 고맙습니다. <br>
-    까스통님 고맙습니다. <br>
-    까스통님 고맙습니다. <br>
-    까스통님 고맙습니다. <br>
-    까스통님 고맙습니다. <br>
+    ${yourface.fbcontent }
   </p>	
   <hr>
   <!-- 댓글창아, 그렇게 됐다. (넌 극혐이야. 너 만들기 싫어.)
@@ -139,7 +135,7 @@
   </div>
    -->	
   <div id="buttons">
-    <a href="delete"><img src="${pageContext.request.contextPath}/resources/img/delete.png"></a>		
+    <a href="delete?fbnum=${yourface.fbnum}"><img src="${pageContext.request.contextPath}/resources/img/delete.png"></a>		
     <a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/list.png"></a>
     <a href="board_write"><img src="${pageContext.request.contextPath}/resources/img/write.png"></a>			
   </div>

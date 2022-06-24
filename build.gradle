@@ -20,10 +20,17 @@ dependencies {
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
+	// JSP 관련 디펜던시
 	implementation 'javax.servlet:jstl'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
+	// 파일 업로드 관련 디펜던시
+	implementation 'org.apache.commons:commons-lang3:3.0' // 이 버전이어야 해. (아니면 에러 잘 나)
+	implementation 'commons-io:commons-io:2.5'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+

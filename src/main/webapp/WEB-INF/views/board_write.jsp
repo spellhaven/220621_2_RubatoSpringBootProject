@@ -121,7 +121,7 @@
   <h2 id="board_title">자유 게시판 </h2>
   <div id="write_title"><h2>글쓰기</h2></div>
  
-  <form action = "fbWrite">
+  <form action = "fbWrite" method = "post" enctype="multipart/form-data">
   	<table>
 	    <tr id="name">
 	      <td class="col1">이름</td>
@@ -137,7 +137,7 @@
 	    </tr>	
 	    <tr id="upload">
 	      <td class="col1">업로드 파일</td>
-	      <td class="col2"><input type="text"> <input type="file"></td>
+	      <td class="col2"><input type="file" name = "inputfile" multiple="multiple"></td>
 	    </tr>
 	   	
 	  </table>

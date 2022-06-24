@@ -1,16 +1,21 @@
 package com.spellhaven.rubatoHome;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spellhaven.rubatoHome.dao.IDao;
 import com.spellhaven.rubatoHome.dto.FreeBoardDto;
@@ -21,7 +26,6 @@ public class HomeController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-
 	@RequestMapping(value="/index")
 	public String index() {
 		
@@ -102,8 +106,8 @@ public class HomeController {
 	}
 	
 	
-	@RequestMapping(value="/fbWrite")
-	public String fbWrite(HttpServletRequest request) {
+	@RequestMapping(value="/fbWrite", method = RequestMethod.POST)
+	public String fbWrite(HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
 		
 		IDao dao = sqlSession.getMapper(IDao.class);
 		
@@ -118,8 +122,35 @@ public class HomeController {
 			fbid = "GUEST";
 		}
 		
-		dao.fbwriteDao(fbname, fbtitle, fbcontent, fbid);
-		
+		if (files.isEmpty()) { // 사용자가 게시글 작성 시 파일 첨부했나? 여부 판단하는 놈. (.isEmpty() 대신 == null도 가능하다. (대신 swag이 없다))
+			
+			dao.fbwriteDao(fbname, fbtitle, fbcontent, fbid); // 첨부파일이 없다? 사용자가 작성한 글만 DB에 삽입.
+						
+		} else {
+			
+			dao.fbwriteDao(fbname, fbtitle, fbcontent, fbid); // 일단 글은 찐다. 그 다음 파일업로드는...
+			
+			String oriFileName = files.getOriginalFilename(); // 업로드된 파일의 원래 이름
+			String oriFileNameExtension = FilenameUtils.getExtension(oriFileName).toLowerCase(); // 업로드된 파일의 원래 이름에서 확장자(예: .jpg)만 추출했다. 혹시 모를 오류 방지를 위해 .toLowerCase()
+			File destinationFile; // 꼭 File (java.io)를 import해야 해. 에러나지안캐 ㅋ
+			String destinationFileName; // 실제 서버에 저장되는 파일 이름
+			
+			String fileUrl = "D:/springBoot_workspace/220621_1_RubatoHomepageProject/src/main/resources/static/uploads/";
+			// 사용자가 업로드한 첨부파일들을 저장할 실제 폴더의 경로. 필요에 따라 oriFileNameExtension(확장자)을 가지고 if문 써서, 파일 종류에 따라 다른 새끼 폴더에 저장할 수도 있겠다.
+			
+			do {
+				destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + oriFileNameExtension;
+				// 영어 대소문자, 숫자가 혼합된 랜덤 32글자 문자열을 생성한 후 끝에 원본 파일 확장자를 붙인다.
+				// 와! 그러면 서버상에는 모든 첨부파일을 겹치지 않는 고유한 이름으로 잘 저장할 수 있겠네요! (어. 맞아.)
+
+				destinationFile = new File(fileUrl+destinationFileName);
+				
+			} while(destinationFile.exists());	// 설마 랜덤 32자리 이름인데 겹치겠어? 싶지만 교수님 특유의 장인정신으로... do-while문을 이용한 예외처리.
+			
+			destinationFile.getParentFile().mkdir();
+			files.transferTo(destinationFile);
+			
+		}
 		return "redirect:board_list";
 	}
 	

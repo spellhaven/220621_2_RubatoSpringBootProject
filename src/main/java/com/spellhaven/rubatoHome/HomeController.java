@@ -85,8 +85,10 @@ public class HomeController {
 		
 		dao.fbBigHitDao(fbnum); // 어. 모델에 싣기 전에 먼저 죠훼수 증가시켜. 어.
 		
-		model.addAttribute("yourface", dao.fbviewDao(fbnum));  // 진짜로 글 내용 보여 주는 함수. 인자 이름을 이상하게 지으니까 훨씬 신경써야 했고 힘들었다. 다음부턴 이러지 말자.
-		model.addAttribute("fileInfo", dao.fbfileInfoDao(fbnum));
+		model.addAttribute("yourface", dao.fbviewDao(fbnum));  // 게시글 내용 보여 주는 함수. 인자 이름을 이상하게 지으니까 훨씬 신경써야 했고 힘들었다. 다음부턴 이러지 말자.
+		model.addAttribute("fileInfo", dao.fbfileInfoDao(fbnum)); // 첨부파일 보여 주는 놈.
+		model.addAttribute("rblist", dao.rblistDao(fbnum)); // 해당 글의 댓글 보여 주는 놈. TODO 여기 rbid 숫자 변환 에러남;;; 난 숫자 변환해 달라고 한 적 없는데
+		
 		
 		return "board_view";
 	}
@@ -231,6 +233,24 @@ public class HomeController {
 	@RequestMapping(value = "replyOk")
 	public String replyOk(HttpServletRequest request, Model model) {
 
+		String rborifbnum = request.getParameter("fbnum");
+		int rborifbnumInt = Integer.parseInt(rborifbnum);
+		String replycontent = request.getParameter("replycontent");
+		
+		HttpSession session = request.getSession();
+		String sessionId = (String)session.getAttribute("id");
+		
+		String rbid;
+		
+		if (sessionId == null) {
+			rbid = "Guest";
+		} else {
+			rbid = sessionId;
+		}
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		dao.rbwriteDao(rborifbnumInt, rbid, replycontent);
+		
 		return "board_list"; // TODO 어떻게 하면 '현재 글' 페이지를 다시 나오게 할깡? board_view에 어떤 인수를 줄 수 있나?
 	}
 	

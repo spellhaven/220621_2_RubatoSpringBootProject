@@ -142,10 +142,23 @@
 	  	</c:if>
   	<br>
   <hr>
+  <!-- 해당 글의 덧글 리스트 출력해주는놈 -->
+  <table border = "1" cellpadding = "0" cellspacing = "0">
+  	<c:forEach items = "${rblist}" var = "rbdto">	
+	  	<tr>
+	  		<td>아이디 : ${rblist.rbid }</td>
+	  		<td>${rblist.rbcontent } </td>
+	  		<td>작성시간 : ${rblist.rbdate }</td>
+	  	</tr>
+	</c:forEach>  	
+  </table>
   
-  <!-- 댓글창 만들려니까 킹받네. 너를 위해서만 sql 테이블을 만듫엀어 . . . 😩-->
+  <hr>
+  <!-- 댓글입력 UI. (댓글창 만들려니까 킹받네. 너를 위해서만 sql 테이블을 만듫엀어 . . . 😩)-->
   <div id="comment_box">
   	<form action = "replyOk">
+  		<!-- fbnum 싣다가 ㅈㄴ 킹받는 오류를 맏닥뜨렸다. 조심해라. value = "${yourface.fbnum} "이라고 하면 value는 EL로 가져온 fbnum에다가 [[[맨 끝 공백 하나까지]]] 실린다!!! 진짜 킹받네 -->
+  		<input type = "hidden" name = "fbnum" value = "${yourface.fbnum}"> <!-- 이렇게 해야 원글번호가 같이 request에 실려간다. -->
 	    <img id="title_comment" src="${pageContext.request.contextPath}/resources/img/title_comment.gif">
 	    <textarea name = "replycontent"></textarea>
 	    <input type = "image" id="ok_ripple" src = "${pageContext.request.contextPath}/resources/img/ok_ripple.gif">

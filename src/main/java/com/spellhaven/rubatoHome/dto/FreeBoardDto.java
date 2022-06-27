@@ -9,13 +9,14 @@ public class FreeBoardDto {
 	private String fbcontent; // 글 내용
 	private String fbdate; // 글 작성 일자
 	private String fbhit; // 하하 fbhit 너도 int가 되고 싶나? "int돼봐" "int돼봐" "안해줘" (단소 살인마 톤으로)
+	private String fbreplycount; // 해당 글에 달린 댓글 수.
 	
 	public FreeBoardDto() {
 		super();
 	}
 	
 	public FreeBoardDto(int fbnum, String fbid, String fbname, String fbtitle, String fbcontent, String fbdate,
-			String fbhit) {
+			String fbhit, String fbreplycount) {
 		super();
 		this.fbnum = fbnum;
 		this.fbid = fbid;
@@ -24,7 +25,10 @@ public class FreeBoardDto {
 		this.fbcontent = fbcontent;
 		this.fbdate = fbdate;
 		this.fbhit = fbhit;
+		this.fbreplycount = fbreplycount;
 	}
+
+
 
 	public int getFbnum() {
 		return fbnum;
@@ -80,6 +84,14 @@ public class FreeBoardDto {
 
 	public void setFbhit(String fbhit) {
 		this.fbhit = fbhit;
+	}
+
+	public String getFbreplycount() {
+		return fbreplycount;
+	}
+
+	public void setFbreplycount(String fbreplycount) {
+		this.fbreplycount = fbreplycount;
 	}
 	
 	

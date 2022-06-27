@@ -8,7 +8,7 @@
 
 	<!-- freeBoard용 SQL들. IDao 인터페이스랑 함수 이름, param 순서, param 개수 잘 맞춰 쓰셈 ㅋ -->
 	<insert id="fbwriteDao">
-		INSERT INTO freeboard(fbnum, fbname, fbtitle, fbcontent, fbid, fbhit) VALUES (fb_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, 0)
+		INSERT INTO freeboard(fbnum, fbname, fbtitle, fbcontent, fbid, fbhit, fbreplycount) VALUES (fb_seq.nextval, #{param1}, #{param2}, #{param3}, #{param4}, 0, 0)
 	</insert>
 
 	<!-- select id = "fblistCountDao" resultType = "int"> 사실 이 함수는 필요없었다. fboardDtos.size()를 쓰면 됐네.
@@ -80,5 +80,22 @@
 		SELECT * FROM replyboard WHERE rborifbnum = #{param1} ORDER BY rbnum ASC
 	</select> <!-- 왜 fbnum이 아니고 rborifbnum인가? => IDao.java에 나온 fbnum은 그냥 "이런 인수를 집어넣어라~" 이렇게 정해 놓은 거고, 이 SQL문은 진짜 DB상의 column_name을 입력해야 하니까. 맨날 헷갈리네 알면서...-->
 
+	<update id = "rbBigHitDao">
+		UPDATE freeboard SET fbreplycount = fbreplycount + 1 WHERE fbnum = #{param1}
+	</update>
+
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

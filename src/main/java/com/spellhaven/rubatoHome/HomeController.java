@@ -249,7 +249,8 @@ public class HomeController {
 		}
 		
 		IDao dao = sqlSession.getMapper(IDao.class);
-		dao.rbwriteDao(rborifbnumInt, rbid, replycontent);
+		dao.rbwriteDao(rborifbnumInt, rbid, replycontent); // 진짜 댓글 써 주는 놈.
+		dao.rbBigHitDao(rborifbnum); // 댓글 수 +1이라고 보여 주는 놈.
 		
 		return "redirect:board_list"; // TODO 어떻게 하면 '현재 글' 페이지를 다시 나오게 할깡? board_view에 어떤 인수를 줄 수 있나?
 	}

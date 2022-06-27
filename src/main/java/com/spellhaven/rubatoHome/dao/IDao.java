@@ -33,6 +33,8 @@ public interface IDao {
 	// reply-board용 DAO.
 	public void rbwriteDao(int rborifbnum, String rbid, String rbcontent); // 댓글 써 주는 메소드. 인수: 해당 글 고유번호, 댓글쓴이 id, 댓글 내용
 	public ArrayList<ReplyDto> rblistDao(String fbnum); // 해당 원글의 글번호를 가지고, 그 글번호에 해당하는 댓글을 전부 가져와 주는 메소드.
+	public void rbBigHitDao(String fbnum); // 해당 원글에 댓글이 하나 달릴 때마다(댓글쓰기 메소드가 실행될 때마다) freeboard의 댓글수 필드 +1 해 주는 놈.
+	
 }
 
 

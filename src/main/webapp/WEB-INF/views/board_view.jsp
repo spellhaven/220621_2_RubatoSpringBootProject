@@ -130,10 +130,10 @@
   <hr>
   	<br>
   
-  		<!-- TODO ${fileInfo}에 대해 HomeController랑 IDao에도 써야 하고, JSTL도 taglib 않했다.-->
+  		
 	  	<p id = "file_info">
 	  		※첨부파일:
-	  		<a href = "${pageContext.request.contextPath}/resources/uploads/${fileInfo.fileName}">${fileInfo.fileOriName}</a>
+	  		<a href = "${pageContext.request.contextPath}/resources/uploads/${fileInfo.fileName}" style = "text-decoration:none">${fileInfo.fileOriName}</a>
 	  	</p>
 	  	<c:if test="${fileInfo.fileExtension == 'jpg' or fileInfo.fileExtension == 'png' or fileInfo.fileExtension == 'gif' or fileInfo.fileExtension == 'bmp'}">
 		  	<p id = "image_view">
@@ -142,13 +142,17 @@
 	  	</c:if>
   	<br>
   <hr>
-  <!-- 댓글창아, 그렇게 됐다. (넌 극혐이야. 너 만들기 싫어.)
+  
+  <!-- 댓글창 만들려니까 킹받네. 너를 위해서만 sql 테이블을 만듫엀어 . . . 😩-->
   <div id="comment_box">
-    <img id="title_comment" src="${pageContext.request.contextPath}/resources/img/title_comment.gif">
-    <textarea></textarea>
-    <img id="ok_ripple" src="${pageContext.request.contextPath}/resources/img/ok_ripple.gif">
+  	<form action = "replyOk">
+	    <img id="title_comment" src="${pageContext.request.contextPath}/resources/img/title_comment.gif">
+	    <textarea name = "replycontent"></textarea>
+	    <input type = "image" id="ok_ripple" src = "${pageContext.request.contextPath}/resources/img/ok_ripple.gif">
+	    <!-- img id="ok_ripple" src="${pageContext.request.contextPath}/resources/img/ok_ripple.gif" -->
+	</form>    
   </div>
-   -->	
+   	
   <div id="buttons">
     <a href="delete?fbnum=${yourface.fbnum}"><img src="${pageContext.request.contextPath}/resources/img/delete.png"></a>		
     <a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/list.png"></a>
@@ -159,7 +163,7 @@
 <footer>
   <img id="footer_logo" src="${pageContext.request.contextPath}/resources/img/footer_logo.gif">
   <ul id="address">
-    <li>서울시 강남구 삼성동 1234 우 : 123-1234</li>  
+    <li>서울시 깜찍구 깜찍동 1234 우 : 123-1234</li>  
     <li>TEL : 031-123-1234  Email : email@domain.com</li>
     <li>COPYRIGHT (C) 루바토 ALL RIGHTS RESERVED</li>
   </ul>

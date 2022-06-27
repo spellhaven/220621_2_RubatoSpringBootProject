@@ -52,16 +52,29 @@
 	</select>
 
 
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 	<!-- member용 SQL -->
+		
+	<insert id = "memberjoinDao">
+		INSERT INTO member(mid, mpw, mname, memail) VALUES (#{param1}, #{param2}, #{param3}, #{param4}) 
+	</insert>
+	
+	<select id = "checkIdDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE mid = #{param1}
+	</select> <!-- SELECT COUNT(*)로 "모두 다 세라" 해도 된다. 왜냐면 mid는 Primary Key니까 않겹치잖아. 그래서 어차피 있으면 1개, 없으면 0개라고 반환될 것. -->
+	
+	<select id = "checkIdPwDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE mid = #{param1} AND mpw = #{param2}
+	</select>
 	
 	
 	
-	
-	
-	
-	
-	
-	
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- reply-board용 SQL -->
+	<insert id = "rbwriteDao">
+		INSERT INTO replyboard(rbnum, rborifbnum, rbid, rbcontent) VALUES (rbnum_seq.nextval, #{param1}, #{param2}, #{param3}) 
+	</insert> <!-- 댓글번호는 알아서 시퀀스로 들어가게... "알지?" -->
 
 
 </mapper>

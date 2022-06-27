@@ -39,7 +39,7 @@
     %>  
     
   
-  	| JOIN | NOTICE
+  	| <a href = "join">JOIN</a> | NOTICE
 </nav>
 <nav id="main_menu">
   <ul> <!-- board_list.html에서 그냥 jsp 요청 형식인 board_list로 잘 바꿨다. -->
@@ -91,7 +91,7 @@
     %>  
     <div class="clear"></div>
     <div id="join_search">
-      <img src="${pageContext.request.contextPath}/resources/img/btn_join.gif">
+      <a href = "join"><img src="${pageContext.request.contextPath}/resources/img/btn_join.gif"></a>
       <img src="${pageContext.request.contextPath}/resources/img/btn_search.gif">
     </div>
     
@@ -156,35 +156,90 @@
     <article id="free"> 	<!—자유 게시판 -->
       <div class="latest_title">
         <img class="latest_img" src="${pageContext.request.contextPath}/resources/img/latest2.gif">
-        <img class="more" src="${pageContext.request.contextPath}/resources/img/more.gif">
+        <a href = "board_list">
+        	<img class="more" src="${pageContext.request.contextPath}/resources/img/more.gif">
+        </a>	
         <div class="clear"></div>					
       </div>
       <div class="latest_content">
         <img class="image" src="${pageContext.request.contextPath}/resources/img/book_pen.gif">
+        
         <ul class="list">
           <li>
-            <div class="subject">${freeboard01.fbtitle }</div>
+            <div class="subject">
+            
+            	<!-- 자게 최근글이 14자보다 길면 자르고 ... 붙여 주는 함수. -->
+            	
+            	<!-- 그냥 <div class="subject">${fn:substring(freeboard02.fbtitle, 0, 14)}...</div> 
+            		 라고 하면 안 된다. 왜냐면 이러면 짧은 제목 끝에도 다 ...이 붙어 버리잖아. -->
+            	<a href = "board_view?fbnum=${freeboard01.fbnum}" style = "text-decoration:none">
+	            	<c:choose>
+	            		<c:when test="${fn:length(freeboard01.fbtitle) > 14 }">
+	            			<c:out value = "${fn:substring(freeboard01.fbtitle, 0, 14)}"/>...
+	            		</c:when>
+	            		<c:otherwise>
+	            			<c:out value = "${freeboard01.fbtitle}"/>
+	            		</c:otherwise>
+	            	</c:choose>
+            	</a>
+            </div>
             <div class="date">
-            	<c:out value = "${fn:substring(freeboard01.fbdate, 0, 10)}"></c:out>
+            	<c:out value = "${fn:substring(freeboard01.fbdate, 0, 10)}"></c:out> <!-- 날짜를 fn:substring으로 안 자르면 css가 터지더라.-->
             </div>
             <div class="clear"></div>		
           </li>
+          
           <li>
-            <div class="subject">${freeboard02.fbtitle }</div>
+            <div class="subject">
+            	<a href = "board_view?fbnum=${freeboard02.fbnum}" style = "text-decoration:none">
+	            	<c:choose>
+	            		<c:when test="${fn:length(freeboard02.fbtitle) > 14 }">
+	            			<c:out value = "${fn:substring(freeboard02.fbtitle, 0, 14)}"/>...
+	            		</c:when>
+	            		<c:otherwise>
+	            			<c:out value = "${freeboard02.fbtitle}"/>
+	            		</c:otherwise>
+	            	</c:choose>
+	            </a>	
+            </div>	
             <div class="date">
             	<c:out value = "${fn:substring(freeboard02.fbdate, 0, 10)}"></c:out>
             </div>
             <div class="clear"></div>		
           </li>
+          
           <li>
-            <div class="subject">${freeboard03.fbtitle }</div>
+            <div class="subject">
+            	<a href = "board_view?fbnum=${freeboard03.fbnum}" style = "text-decoration:none">
+	            	<c:choose>
+	            		<c:when test="${fn:length(freeboard03.fbtitle) > 14 }">
+	            			<c:out value = "${fn:substring(freeboard03.fbtitle, 0, 14)}"/>...
+	            		</c:when>
+	            		<c:otherwise>
+	            			<c:out value = "${freeboard03.fbtitle}"/>
+	            		</c:otherwise>
+	            	</c:choose>
+	            </a>	
+            </div>
             <div class="date">
             	<c:out value = "${fn:substring(freeboard03.fbdate, 0, 10)}"></c:out>
             </div>
             <div class="clear"></div>		
           </li>
+          
           <li>
-            <div class="subject">${freeboard04.fbtitle }</div>
+            <div class="subject">
+            	<a href = "board_view?fbnum=${freeboard04.fbnum}" style = "text-decoration:none">
+	            	<c:choose>
+	            		<c:when test="${fn:length(freeboard04.fbtitle) > 14 }">
+	            			<c:out value = "${fn:substring(freeboard04.fbtitle, 0, 14)}"/>...
+	            		</c:when>
+	            		<c:otherwise>
+	            			<c:out value = "${freeboard04.fbtitle}"/>
+	            		</c:otherwise>
+	            	</c:choose>
+	            </a>	
+            </div>
             <div class="date">
             	<c:out value = "${fn:substring(freeboard04.fbdate, 0, 10)}"></c:out>
             </div>
@@ -234,7 +289,7 @@
 <footer>
   <img id="footer_logo" src="${pageContext.request.contextPath}/resources/img/footer_logo.gif">
   <ul id="address">
-    <li>서울시 강남구 삼성동 1234 우 : 123-1234</li>  
+    <li>서울시 깜찍구 깜찍동 1234 우 : 123-1234</li>  
     <li>TEL : 031-123-1234  Email : email@domain.com</li>
     <li>COPYRIGHT (C) 루바토 ALL RIGHTS RESERVED</li>
   </ul>

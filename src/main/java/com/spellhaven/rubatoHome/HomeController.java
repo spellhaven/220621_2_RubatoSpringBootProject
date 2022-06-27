@@ -102,13 +102,28 @@ public class HomeController {
 	@RequestMapping(value="loginOk", method = RequestMethod.POST)
 	public String loginOk(HttpServletRequest request, Model model) {
 		
-		HttpSession session = request.getSession();
+		String mid = request.getParameter("mid");
+		String mpw = request.getParameter("mpw");
 		
-		session.setAttribute("id", request.getParameter("mid"));
-		model.addAttribute("memberId", request.getParameter("mid")); // 막상 만들어 놓고 쓸 데가 없어진 model아, "않미안해 ㅋ"
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		int checkIdFlag = dao.checkIdDao(mid); // 아이디 존재 여부 체크해주는 플래그. 1(존재) 또는 0(않존재)
+		int checkIdPwFlag = dao.checkIdPwDao(mid, mpw); // 아이디, 비번 잘 일치하나 체크해 주는 플래그. 1(^^) 또는 0(ㅗㅗ)
+
+		
+		// 로그인 실패하면 JS로 경고창 뜨게도 할 수 있다... 너는 대의(React 빨리 배우기)를 위해 "생략"
+		if(checkIdFlag == 1 && checkIdPwFlag == 1) { //TODO 혹시 에러나면 이걸 if(checkIdPwFlag == 1)만으로 고치셈
+			
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("id", request.getParameter("mid"));
+			model.addAttribute("memberId", request.getParameter("mid"));
+			
+		}
 		
 		return "redirect:index";
 	}
+	
 	
 	@RequestMapping(value="/logout")
 	public String logout() {
@@ -143,7 +158,7 @@ public class HomeController {
 			
 			String oriFileName = files.getOriginalFilename(); // 업로드된 파일의 원래 이름
 			String oriFileNameExtension = FilenameUtils.getExtension(oriFileName).toLowerCase(); // 업로드된 파일의 원래 이름에서 확장자(예: .jpg)만 추출했다. 혹시 모를 오류 방지를 위해 .toLowerCase()
-			File destinationFile; // 꼭 File (java.io)를 import해야 해. 에러나지안캐 ㅋ
+			File destinationFile; // 꼭 두 File 중에서 apache.tomcat 말고 java.io 패키지의 클래스를 import해야 해. 에러나지안캐 ㅋ
 			String destinationFileName; // 실제 서버에 저장되는 파일 이름
 			
 			String fileUrl = "D:/springBoot_workspace/220621_1_RubatoHomepageProject/src/main/resources/static/uploads/";
@@ -158,19 +173,19 @@ public class HomeController {
 				
 			} while(destinationFile.exists());	// 설마 랜덤 32자리 이름인데 겹치겠어? 싶지만 교수님 특유의 장인정신으로... do-while문을 이용한 예외처리.
 			
-			destinationFile.getParentFile().mkdir();
-			files.transferTo(destinationFile);
+			destinationFile.getParentFile().mkdir(); // 이 두 줄은 잘 모르겠다... "그런데얘들이핵심이다"
+			files.transferTo(destinationFile); // 늘 내가 가장 이해 못 하는 것이 핵심이었다. 그게 인생이다.
 			
 			// 이 코드 3줄 중요하다. " '작성' 버튼을 누르면서 현재 글에 해당하는 파일을 첨부하려면 현재 글 일련번호를 가져와야 하는데 그건 당장 '작성' 버튼을 눌렀을 때 생성된 거니까...
-			ArrayList<FreeBoardDto> fbDtos = dao.fblistDao(); // Line 131에서 글을 썼는데 그걸 가져와.
+			ArrayList<FreeBoardDto> fbDtos = dao.fblistDao(); // 방금 위에서 글을 썼는데 그걸 가져와.
 			int fbnum = fbDtos.get(0).getFbnum(); // 글목록에서 최상단에 있는 글이 당장 쓴 글일 테니까.
 		
 			dao.fbfileInsertDao(fbnum, destinationFileName, oriFileName, fileUrl, oriFileNameExtension);
 			
+			// model.addAttribute("fileInfo", dao.fbfileInfoDao(fbnum));
 			// 어. 내가 이 코드 맞게썻니? (코드 자체는 맞다 제법인데? 그치만 여기 말고 board_view에 있어야 한다. "남이 써 놓은 글을 볼 때" fileInfo가 와야지.
 			// 깜찍아! 너 Model 개념 사실 헷갈리지!! Model이랑 Request 차이점도 사실 헷갈리지!! (네.)
-			// model.addAttribute("fileInfo", dao.fbfileInfoDao(fbnum));
-			
+						
 		}
 		return "redirect:board_list";
 	}
@@ -186,6 +201,53 @@ public class HomeController {
 		return "redirect:board_list";
 	}
 	
+	@RequestMapping(value = "/join")
+	public String join() {
+
+		return "member_join";
+	}
+	
+	@RequestMapping(value = "/joinOk", method = RequestMethod.POST)
+	public String joinOk(HttpServletRequest request) {
+		
+		// 회원가입 할 때 중복 아이디 없나 그런 거 JS로 validation 하던 거 알지? 어. "그건 생략할개"
+		
+		String mid = request.getParameter("memberid");
+		String mpw = request.getParameter("memberpw");
+		String mname = request.getParameter("membername");
+		String memail = request.getParameter("memberemail");
+		
+		IDao dao = sqlSession.getMapper(IDao.class);
+		dao.memberjoinDao(mid, mpw, mname, memail);		
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("id", mid);
+		session.setAttribute("name", mname);
+				
+		
+		return "redirect:index";
+	}	
+	
+	@RequestMapping(value = "replyOk")
+	public String replyOk(HttpServletRequest request, Model model) {
+
+		return "board_list"; // TODO 어떻게 하면 '현재 글' 페이지를 다시 나오게 할깡? board_view에 어떤 인수를 줄 수 있나?
+	}
+	
+	
+//	@RequestMapping(value = "/")
+//	public String () {
+//		
+//		return "";
+//	}
+//	@RequestMapping(value = "/")
+//	public String () {
+//		
+//		return "";
+//	}
+	
+	
+		
 }
 
 

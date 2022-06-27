@@ -12,7 +12,6 @@ public class FreeBoardDto {
 	
 	public FreeBoardDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public FreeBoardDto(int fbnum, String fbid, String fbname, String fbtitle, String fbcontent, String fbdate,

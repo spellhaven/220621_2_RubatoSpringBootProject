@@ -4,7 +4,7 @@
 <html>
 <head> 
 <meta charset="utf-8">
-<title>클래식기타 커뮤니티</title>
+<title>클래식기타 커뮤니티 헤언가입</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/header.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/footer.css">
@@ -118,34 +118,34 @@
 
 <section id="main">
   <img src="${pageContext.request.contextPath}/resources/img/comm.gif">
-  <h2 id="board_title">자유 게시판 </h2>
-  <div id="write_title"><h2>글쓰기</h2></div>
+  <h2 id="board_title">헤언가입</h2>
+  <div id="write_title"><h2>너의 중요한 개인정보를 다 제공해줘봐</h2></div>
  
-  <form action = "fbWrite" method = "post" enctype="multipart/form-data">
-  <!-- 어 이 encoding type 중요해. 이래야지 첨부파일 올릴 때 에러 잘 않나. -->
+  <form action = "joinOk" method = "post">
   	<table>
-	    <tr id="name">
-	      <td class="col1">이름</td>
-	      <td class="col2"><input type="text" name = "fbname"></td>
+	    <tr id="joincredentials"> <!-- 이 tr id는 css 지정하는 용도니까 바꿔도 되고 않바꿔도된다. board_write_main.css 좀 고쳤다. -->
+	      <td class="col1">아이디</td>
+	      <td class="col2"><input type="text" name = "memberid"></td>
 	    </tr>
-	    <tr id="subject">
-	      <td class="col1">제목</td>
-	      <td class="col2"><input type="text" name = "fbtitle"></td>
+	    <tr id="joincredentials">
+	      <td class="col1">비번</td>
+	      <td class="col2"><input type="password" name = "memberpw"></td>
 	    </tr>		
-	    <tr id="content">
-	      <td class="col1">내용</td>
-	      <td class="col2"><textarea name = "fbcontent"></textarea></td>
-	    </tr>	
-	    <tr id="upload">
-	      <td class="col1">업로드 파일</td>
-	      <td class="col2"><input type="file" name = "files" multiple="multiple"></td>
+	    <tr id="joincredentials">
+	      <td class="col1">느그이름</td>
+	      <td class="col2"><input type="text" name = "membername"></td>
 	    </tr>
+	    <tr id="joincredentials">
+	      <td class="col1">느그이메일</td>
+	      <td class="col2"><input type="email" name = "memberemail"></td>
+	    </tr>		
+
 	   	
 	  </table>
 	  <div id="buttons">
 	    <!-- <a href="#"><img src="${pageContext.request.contextPath}/resources/img/ok.png"></a> -->
 	    <input type = "image" src="${pageContext.request.contextPath}/resources/img/ok.png">
-	    <a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/list.png"></a>
+	    <!-- a href="board_list"><img src="${pageContext.request.contextPath}/resources/img/list.png"></a-->
 	  </div>
   </form> 
   

@@ -192,7 +192,7 @@
   <footer>
     <img id="footer_logo" src="${pageContext.request.contextPath}/resources/img/footer_logo.gif">
     <ul id="address">
-      <li>서울시 강남구 삼성동 1234 우 : 123-1234</li>  
+      <li>서울시 깜찍구 깜찍동 1234 우 : 123-1234</li>  
       <li>TEL : 031-123-1234  Email : email@domain.com</li>
       <li>COPYRIGHT (C) 루바토 ALL RIGHTS RESERVED</li>
     </ul>

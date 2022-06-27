@@ -23,7 +23,13 @@ public interface IDao {
 	public FileDto fbfileInfoDao(String fbnum); // 게시글 번호로 검색하여 해당 게시글의 첨부파일에 대한 모든 정보 불러오기 (ㅋ)
 	
 	
-	
 	// member용 DAO
+	public void memberjoinDao(String mid, String mpw, String mname, String memail); // 회원가입 메소드
+	public int checkIdDao(String mid); // 로그인 시도 시 회원 아이디 존재 여부 DB에서 체크해주는 놈. 1 또는 0을 반환할것.
+	public int checkIdPwDao(String mid, String mpw); // 로그인 시도 시 회원 아이디/비번 일치하는지 DB에서 체크해주는 놈. 1 또는 0을 반환할것.
+	
+	
+	// reply-board용 DAO.
+	public void rbwriteDao(int rborifbnum, String rbid, String rbcontent); // 댓글 써 주는 메소드. 인수: 해당 글 고유번호, 댓글쓴이 id, 댓글 내용
 	
 }

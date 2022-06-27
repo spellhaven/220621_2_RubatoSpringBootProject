@@ -143,12 +143,13 @@
   	<br>
   <hr>
   <!-- 해당 글의 덧글 리스트 출력해주는놈 -->
+  
   <table border = "1" cellpadding = "0" cellspacing = "0">
-  	<c:forEach items = "${rblist}" var = "rbdto">	
+  	<c:forEach items="${rblist}" var="rbdto">	
 	  	<tr>
-	  		<td>아이디 : ${rblist.rbid }</td>
-	  		<td>${rblist.rbcontent } </td>
-	  		<td>작성시간 : ${rblist.rbdate }</td>
+	  		<td>아이디 : ${rbdto.rbid }</td> 
+	  		<td>${rbdto.rbcontent } </td>
+	  		<td>작성시간 : ${rbdto.rbdate }</td>
 	  	</tr>
 	</c:forEach>  	
   </table>

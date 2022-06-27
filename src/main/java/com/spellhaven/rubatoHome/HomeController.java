@@ -233,12 +233,12 @@ public class HomeController {
 	@RequestMapping(value = "replyOk")
 	public String replyOk(HttpServletRequest request, Model model) {
 
+		String replycontent = request.getParameter("replycontent");
 		String rborifbnum = request.getParameter("fbnum");
 		int rborifbnumInt = Integer.parseInt(rborifbnum);
-		String replycontent = request.getParameter("replycontent");
 		
 		HttpSession session = request.getSession();
-		String sessionId = (String)session.getAttribute("id");
+		String sessionId = (String) session.getAttribute("id");
 		
 		String rbid;
 		
@@ -251,7 +251,7 @@ public class HomeController {
 		IDao dao = sqlSession.getMapper(IDao.class);
 		dao.rbwriteDao(rborifbnumInt, rbid, replycontent);
 		
-		return "board_list"; // TODO 어떻게 하면 '현재 글' 페이지를 다시 나오게 할깡? board_view에 어떤 인수를 줄 수 있나?
+		return "redirect:board_list"; // TODO 어떻게 하면 '현재 글' 페이지를 다시 나오게 할깡? board_view에 어떤 인수를 줄 수 있나?
 	}
 	
 	
